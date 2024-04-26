@@ -1,0 +1,123 @@
+<div class="container">
+  <div class="row mt-3 text-center">
+    <div class="col">
+      <h2>Registrar alumno</h2>
+    </div>
+  </div>
+  <hr>
+  <div class="row pt-3">
+    <div class="col">
+      <form [formGroup]="Formulario" (ngSubmit)="onSubmit()">
+        <div class="row mb-4">
+          <div class="col">
+            <b for="nombres">Nombres:</b>
+            <input pInputText formControlName="nombres" placeholder="Ingrese sus nombres">
+          </div>
+          <div class="col">
+            <b for="apellidos">Apellidos:</b>
+            <input pInputText formControlName="apellidos" placeholder="Ingrese sus apellidos">
+          </div>
+          <div class="col">
+            <b for="email">Email:</b><br>
+            <input pInputText formControlName="email" placeholder="Ingrese su email">
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col">
+            <b for="tipoDocumento">Tipo de Documento:</b>
+            <p-dropdown formControlName="tipoDocumento" [options]="tiposDocumento" optionLabel="name" optionValue="name" placeholder="Seleccione"></p-dropdown>
+          </div>
+          <div class="col">
+            <b for="numeroDocumento">Número de Documento:</b>
+            <input pInputText formControlName="numeroDocumento" placeholder="Ingrese su número de documento">
+          </div>
+          <div class="col">
+            <b for="tipoDocumento">Fecha de Nacimiento:</b>
+            <p-calendar formControlName="fechaNacimiento" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy"></p-calendar>
+          </div>
+          <div class="col">
+            <b for="numeroDocumento">Sexo:</b><br>
+            <p-dropdown formControlName="sexo" [options]="sexos" optionLabel="name" optionValue="code" placeholder="Seleccione"></p-dropdown>
+          </div>
+        </div>
+        <div class="row mb-4">
+
+          <div class="col">
+            <b for="tipoDocumento">Teléfono:</b>
+            <input pInputText formControlName="telefono" placeholder="Ingrese su número de teléfono">
+          </div>
+          <div class="col">
+            <b for="numeroDocumento">Nacionalidad:</b><br>
+            <p-dropdown formControlName="nacionalidad" [options]="nacionalidades" optionLabel="name" optionValue="name" placeholder="Seleccione"></p-dropdown>
+          </div>
+          <div class="col">
+            <b for="email">Imagen:</b><br>
+            <input id="imagen" type="file" accept=".jpg,.png" (change)="onSeleccionarImagen($event)">
+          </div>
+        </div>
+        <div class="row">
+          <p-button type="submit" label="Enviar"></p-button>
+        </div>
+      </form> 
+    </div>
+  </div>
+  <br>
+  <div class="row mt-3 text-center">
+    <div class="col">
+      <h2>Listado de alumnos</h2>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <p-table [value]="alumnos">
+      <ng-template pTemplate="header">
+          <tr class="text-center">
+              <th>Imagen</th>
+              <th>Apellidos y Nombres</th>
+              <th>Documento</th>
+              <th>Sexo</th>
+              <th>Fecha de Nacimiento</th>
+              <th>Nacionalidad</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Accion</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-alumno>
+          <tr>
+              <td>
+                <div class="image-container">
+                  <img [src]="alumno.imagen" alt="Imagen de perfil" style="width: 80px; height: 80px; border-radius: 50%;">
+                  <span (click)="showDialog(alumno)" class="edit-text">Editar</span>
+                </div>
+              </td>
+              <td>{{ alumno.apellidos + ' - ' + alumno.nombres }}</td>
+              <td>{{ alumno.tipoDocumento + ' - '+ alumno.numeroDocumento }}</td>
+              <td>{{ alumno.sexo ? 'Masculino' : 'Femenino' }}</td>
+              <td>{{ alumno.fechaNacimiento | date:'dd/MM/yyyy' }}</td>
+              <td>{{ alumno.nacionalidad }}</td>
+              <td>{{ alumno.email }}</td>
+              <td>{{ alumno.telefono }}</td>
+              <td>
+                <p-button type="button" label="Eliminar" severity="danger" (click)="eliminarAlumno(alumno)"></p-button>
+              </td>
+          </tr>
+      </ng-template>
+  </p-table>
+  </div>
+  <div class="row">
+    <p-dialog header="Editar imagen" [(visible)]="visible" [modal]="true" [style]="{ width: '30vw' }" [draggable]="false" [resizable]="false">
+        <div class="row mb-3">
+          <div class="col">
+            <b for="email">Imagen nueva:</b><br>
+            <input id="imagenNueva" type="file" accept=".jpg,.png" (change)="onSeleccionarImagen($event, true)">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p-button label="Success" severity="Actualizar imagen" (click)="actualizarImagenAlumno()"></p-button>
+          </div>
+        </div>
+    </p-dialog>
+  </div>
+</div>
