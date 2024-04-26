@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.14.
 
+## Configuracion del servicio
+
+Para configurar la url_base del api la variable se ubica en `alumno.service.ts` asi como el apikey.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
